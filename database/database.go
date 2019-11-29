@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func openJSON() {
+func OpenJSON() {
 	jsonFile, err := os.Open("loan.json")
 	defer jsonFile.Close()
 	// handle the err

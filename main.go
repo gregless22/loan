@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gregless22/loan/database"
 )
 
 func main() {
 	http.HandleFunc("/gql", handler)
-	database.openJSON()
+	database.OpenJSON()
 	log.Fatal(http.ListenAndServe(":7777", nil))
 }
 
