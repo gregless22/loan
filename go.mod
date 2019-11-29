@@ -1,3 +1,3 @@
-module gregless22/loan
+module github.com/gregless22/loan
 
 go 1.13
