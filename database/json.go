@@ -1,10 +1,11 @@
-package db
+package database
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"time"
 )
 
 func openJSON() {
@@ -32,4 +33,15 @@ func openJSON() {
 		fmt.Println(loans.Loans[i])
 	}
 
+}
+
+// create the structs to hold the loan
+type Loan struct {
+	Amount    int       `json:"amount"`
+	StartDate time.Time `json:"startDate"`
+	Rate      float32   `json:"rate"`
+}
+
+type Loans struct {
+	Loans []Loan `json:"loans"`
 }

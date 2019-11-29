@@ -5,11 +5,13 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gregless22/loans/database"
 )
 
 func main() {
 	http.HandleFunc("/gql", handler)
-	db.openJSON()
+	database.openJSON()
 	log.Fatal(http.ListenAndServe(":7777", nil))
 }
 
@@ -17,13 +19,3 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "HI welcome to the servder")
 }
 
-// create the structs to hold the loan
-type Loan struct {
-	Amount    int       `json:"amount"`
-	StartDate time.Time `json:"startDate"`
-	Rate      float32   `json:"rate"`
-}
-
-type Loans struct {
-	Loans []Loan `json:"loans"`
-}
