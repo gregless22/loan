@@ -1,14 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gregless22/loan/database"
 )
 
 func main() {
 	// TODO import the handlers
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/test", handler)
 	http.HandleFunc("/create", create)
 	http.HandleFunc("/read", read)
 
@@ -16,8 +19,8 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	// return the handler object
-	fmt.Fprintf(w, "Hi welcome to the servder")
+	// test the database
+	database.Handler()
 }
 
 func create(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +29,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 // TODO Read
 func read(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "this will eventually read")
+	// get the data
+	js, err := json.Marshal(database.Read())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 // TODO Update

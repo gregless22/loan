@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Loan holds the loan struct
 type Loan struct {
 	Amount    int       `json:"amount"`
 	StartDate time.Time `json:"startDate"`
@@ -19,13 +20,28 @@ type Loans struct {
 	Loans []Loan `json:"loans"`
 }
 
-func openJSON() {
+// OpenJSON opens the file read to write
+func openJSON() (*os.File, error) {
 	jsonFile, err := os.Open("loan.json")
-	defer jsonFile.Close()
+
 	// handle the err
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	return jsonFile, err
+
+}
+
+// Handler is just a test
+func Handler() {
+	openJSON()
+}
+
+// Read will return all of the loans
+func Read() Loans {
+	jsonFile, err := openJSON()
+	defer jsonFile.Close()
 
 	// Read the JSON
 	byte, _ := ioutil.ReadAll(jsonFile)
@@ -39,9 +55,6 @@ func openJSON() {
 		fmt.Println(err)
 	}
 
-	//test
-	for i := 0; i < len(loans.Loans); i++ {
-		fmt.Println(loans.Loans[i])
-	}
-
+	// return the loans
+	return loans
 }
