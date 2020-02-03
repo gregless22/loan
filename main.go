@@ -11,34 +11,34 @@ import (
 
 func main() {
 	// TODO import the handlers
-	http.HandleFunc("/test", handler)
-	http.HandleFunc("/create", create)
-	http.HandleFunc("/read", read)
+	http.HandleFunc("/loan", loan)
 
 	log.Fatal(http.ListenAndServe(":7777", nil))
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	// test the database
-	database.Handler()
-}
-
-func create(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "this will eventually write")
-}
-
-// TODO Read
-func read(w http.ResponseWriter, r *http.Request) {
-	// get the data
-	js, err := json.Marshal(database.Read())
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
 }
 
 // TODO Update
 
 // TODO Delete
+
+func loan(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/loan" {
+		http.Error(w, "404 not found", http.StatusNotFound)
+		return
+	}
+
+	switch r.Method {
+	case "GET":
+		js, err := json.Marshal(database.Read())
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	case "POST":
+		fmt.Fprint(w, "This works")
+
+	default:
+		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+	}
+}
