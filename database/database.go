@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func OpenJSON() {
+func openJSON() {
 	jsonFile, err := os.Open("loan.json")
 	defer jsonFile.Close()
 	// handle the err
@@ -35,13 +35,4 @@ func OpenJSON() {
 
 }
 
-// create the structs to hold the loan
-type Loan struct {
-	Amount    int       `json:"amount"`
-	StartDate time.Time `json:"startDate"`
-	Rate      float32   `json:"rate"`
-}
 
-type Loans struct {
-	Loans []Loan `json:"loans"`
-}
