@@ -36,8 +36,50 @@ func loan(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(js)
 	case "POST":
-		fmt.Fprint(w, "This works")
+		// get the loan struct
+		loan := database.Loan{}
 
+		// decode the body into the loan type
+		err := json.NewDecoder(r.Body).Decode(&loan)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+
+		// add to the database
+		js, err := json.Marshal(database.Create(loan))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// return the loan that was created
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	case "DELETE":
+		// get the loan struct
+		loan := database.Loan{}
+
+		// decode the body into the loan type
+		err := json.NewDecoder(r.Body).Decode(&loan)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+
+		// add to the database
+		l, err := database.Delete(loan.ID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		js, err := json.Marshal(l)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// return the loan that was created
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
 	default:
 		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
 	}
