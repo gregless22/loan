@@ -26,9 +26,9 @@ type Loans struct {
 func openJSON() *os.File {
 	jsonFile, err := os.Open("loan.json")
 
-	// handle the err
+	// if the file doesnt exist write a new one
 	if err != nil {
-		fmt.Println(err)
+		jsonFile, err = os.Create("loan.json")
 	}
 
 	return jsonFile
@@ -92,14 +92,12 @@ func Delete(id int) (Loan, error) {
 	l := Loan{}
 	// find the Loan
 	for i, loan := range loans.Loans {
-		fmt.Println(id)
-		fmt.Println(loan.ID)
 		if id == loan.ID {
 			l = loan
 			loans.Loans = append(loans.Loans[:i], loans.Loans[i+1:]...)
 			break
 		}
-		if i == len(loans.Loans) {
+		if i >= len(loans.Loans) {
 			//return not found
 			err := errors.New("Unable to find current loan in database")
 			return l, err

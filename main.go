@@ -10,15 +10,10 @@ import (
 )
 
 func main() {
-	// TODO import the handlers
 	http.HandleFunc("/loan", loan)
 
 	log.Fatal(http.ListenAndServe(":7777", nil))
 }
-
-// TODO Update
-
-// TODO Delete
 
 func loan(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/loan" {
