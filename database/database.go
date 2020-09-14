@@ -6,16 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"time"
 )
-
-// Loan holds the loan struct
-type Loan struct {
-	ID        int       `json:"id"`
-	Amount    int       `json:"amount"`
-	StartDate time.Time `json:"startDate"`
-	Rate      float32   `json:"rate"`
-}
 
 // Loans holds a slice of Loans
 type Loans struct {
