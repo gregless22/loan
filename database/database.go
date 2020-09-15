@@ -15,7 +15,7 @@ import (
 func Init(sqlStatement string) {
 
 	// create the postgres db connection
-	db := connect()
+	db := Connect()
 	defer db.Close()
 
 	_, err := db.Exec(sqlStatement)
@@ -25,15 +25,8 @@ func Init(sqlStatement string) {
 	}
 }
 
-// DB will return the database instance
-func DB() *sql.DB {
-	// create the postgres db connection
-	db := connect()
-	return db
-}
-
 // Connect gets connection details from env variables and returns a pointer to the database
-func connect() (db *sql.DB) {
+func Connect() (db *sql.DB) {
 	port, err := strconv.Atoi(os.Getenv("POSTGRES_PORT"))
 	if err != nil {
 		port = 5432

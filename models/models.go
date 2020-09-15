@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gregless22/loan/database"
@@ -19,7 +18,7 @@ type Loan struct {
 }
 
 // Init will initiallise the database table for the loan
-func (l Loan) init() {
+func (l Loan) Init() {
 	sqlStatement := `CREATE TABLE if NOT EXISTS LOANS (
 		LOAN_FROM        CHAR(30)      NOT NULL,
 		LOAN_TO          CHAR(30)      NOT NULL,
@@ -33,20 +32,43 @@ func (l Loan) init() {
 	database.Init(sqlStatement)
 }
 
-// Create saves the loan to the database
-func (l Loan) Create() {
-	// change into a valid sqlstatement
-	db := database.DB()
+// GetAll returns all of the loans in the database
+// func (l Loan) GetAll() ([]Loan, error) {
+// 	//create empty slice of loans
+// 	var loans []Loan
 
-	var id int64
+// 	// connect to the database
+// 	db := database.DB()
+// 	defer db.Close()
 
-	sqlStatement := `INSERT INTO loans (LOAN_FROM, LOAN_TO, START_DATE, END_DATE, RATE, AMOUNT) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`
-	err := db.QueryRow(sqlStatement, l.From, l.To, l.StartDate, l.EndDate, l.Rate, l.Amount).Scan(&id)
+// 	// create the select sql query
+// 	sqlStatement := `SELECT * FROM loans`
 
-	fmt.Println(id)
+// 	// execute the sql statement
+// 	rows, err := db.Query(sqlStatement)
+// 	defer rows.Close()
 
-	if err != nil {
-		fmt.Println("err:", err)
-	}
-	fmt.Println("saving to the database")
-}
+// 	if err != nil {
+// 		log.Fatalf("Unable to execute the query. %v", err)
+// 	}
+
+// 	// iterate over the rows
+// 	for rows.Next() {
+// 		var loan Loan
+
+// 		// unmarshal the row object to user
+// 		err = rows.Scan(&loan.From, &loan.To, &loan.StartDate, &loan.EndDate, &loan.Rate, &loan.Amount, &loan.ID)
+
+// 		if err != nil {
+// 			log.Fatalf("Unable to scan the row. %v", err)
+// 		}
+
+// 		// append the user in the users slice
+// 		loans = append(loans, loan)
+
+// 	}
+
+// 	// return empty user on error
+// 	return loans, err
+
+// }

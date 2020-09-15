@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,7 +10,8 @@ import (
 
 func main() {
 	// initialise the models in the database
-	models.Init(models.Loan{})
+	var l models.Loan
+	l.Init()
 
 	http.HandleFunc("/", test)
 	http.HandleFunc("/loans", loans)
@@ -26,30 +26,45 @@ func test(w http.ResponseWriter, r *http.Request) {
 func loans(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		fmt.Printf("%v", r.Body)
-		fmt.Fprintf(w, "%s", r.Body)
-		// TODO parse the URL to get whether there is an ID or not
+		// var loan models.Loan
+
+		// loans, err := loan.GetAll()
+
+		// if err != nil {
+		// 	fmt.Fprintf(w, "Error getting data: %s", err)
+		// }
+
+		// loansJSON, err := json.Marshal(loans)
+
+		// if err != nil {
+		// 	fmt.Fprintf(w, "Error decoding data: %s", err)
+		// }
+
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK)
+		// w.Write(loansJSON)
+
 	case "POST":
-		loan := models.Loan{}
+		// loan := models.Loan{}
 
-		// decode the incoming body
-		err := json.NewDecoder(r.Body).Decode(&loan)
-		if err != nil {
-			fmt.Fprintf(w, "Error decoding data: %s", err)
-		}
+		// // decode the incoming body
+		// err := json.NewDecoder(r.Body).Decode(&loan)
+		// if err != nil {
+		// 	fmt.Fprintf(w, "Error decoding data: %s", err)
+		// }
 
-		loan.Create()
-		// TODO write the loan to the database
+		// loan.Create()
+		// // TODO write the loan to the database
 
-		// Send the reponse back that the loan has been added
-		loanJSON, err := json.Marshal(loan)
-		if err != nil {
-			fmt.Fprintf(w, "Error marshalling back to JSON")
-		}
+		// // Send the reponse back that the loan has been added
+		// loanJSON, err := json.Marshal(loan)
+		// if err != nil {
+		// 	fmt.Fprintf(w, "Error marshalling back to JSON")
+		// }
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(loanJSON)
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK)
+		// w.Write(loanJSON)
 	case "DELETE":
 		fmt.Fprintf(w, "TODO delete the loan")
 	case "PUT":
