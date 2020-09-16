@@ -29,10 +29,11 @@ func CreateLoan(w http.ResponseWriter, r *http.Request) {
 	}
 
 	id := createLoan(loan)
+	message := "User created successfully"
 
 	res := response{
 		ID:      id,
-		Message: "User created successfully",
+		Message: message,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
