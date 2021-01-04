@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gregless22/loan/middleware"
@@ -18,7 +17,7 @@ func Router() *http.ServeMux {
 
 // this will parse the header and route to the appropriate function
 func loans(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Method)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	switch r.Method {
 	case "GET":
 		middleware.ReadLoans(w, r)
