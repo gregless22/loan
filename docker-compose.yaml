@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  ui:
+    container_name: ui
+    build:
+      context: ./ui
+      target: develop-stage
+    volumes:
+      - type: volume
+        source: node_modules
+        target: /app/src/node_modules
+      - type: bind
+        source: ./ui/src
+        target: /app/src
+    ports:
+      - 4000:3000
+    command: /bin/sh -c "yarn && yarn dev --host 0.0.0.0"
+    depends_on:
+      - server
+
+  server:
+    container_name: server
+    build:
+      target: develop-stage
+    ports:
+      - 9010:9010
+    depends_on:
+      - postgres
+    volumes:
+      - type: bind
+        source: ./server/
+        target: /app
+    env_file:
+      - .env
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+
+  migrator:
+    container_name: migrator
+    image: migrate/migrate
+    depends_on:
+      - postgres
+    entrypoint: ["migrate"]
+    command: -source file:///migrations -database "postgresql://username:password@postgres:5432/iplant?sslmode=disable" -verbose up
+    volumes:
+      - type: bind
+        source: ./server/pkg/repository/postgres/migrations
+        target: /migrations
+
+volumes:
+  node_modules:
