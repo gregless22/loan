@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gregless22/loan/models"
-	"github.com/gregless22/loan/router"
+	"github.com/gregless22/loan/server/models"
+	"github.com/gregless22/loan/server/router"
 )
 
 func main() {

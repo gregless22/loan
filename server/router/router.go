@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/gregless22/loan/middleware"
+	"github.com/gregless22/loan/server/middleware"
 )
 
 // Router will return a new servemux instance

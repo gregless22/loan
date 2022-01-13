@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gregless22/loan/database"
+	"github.com/gregless22/loan/server/database"
 )
 
 // DeleteLoan will delete the loan from the database

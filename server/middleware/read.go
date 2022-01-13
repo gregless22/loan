@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gregless22/loan/database"
-	"github.com/gregless22/loan/models"
+	"github.com/gregless22/loan/server/database"
+	"github.com/gregless22/loan/server/models"
 )
 
 // ReadLoans will return all of the loans in the database

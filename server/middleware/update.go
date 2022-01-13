@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gregless22/loan/database"
-	"github.com/gregless22/loan/models"
+	"github.com/gregless22/loan/server/database"
+	"github.com/gregless22/loan/server/models"
 )
 
 // UpdateLoan will take a loan type and update it in the database

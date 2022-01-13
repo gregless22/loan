@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/gregless22/loan/database"
+	"github.com/gregless22/loan/server/database"
 )
 
 // Loan schema for storing in the database

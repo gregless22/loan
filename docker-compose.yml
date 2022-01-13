@@ -21,14 +21,14 @@ services:
   server:
     container_name: server
     build:
-      target: develop-stage
+      target: production-stage
     ports:
       - 9010:9010
     depends_on:
       - postgres
     volumes:
       - type: bind
-        source: ./server/
+        source: .
         target: /app
     env_file:
       - .env
@@ -40,18 +40,5 @@ services:
       - 5432:5432
     env_file:
       - .env
-
-  migrator:
-    container_name: migrator
-    image: migrate/migrate
-    depends_on:
-      - postgres
-    entrypoint: ["migrate"]
-    command: -source file:///migrations -database "postgresql://username:password@postgres:5432/iplant?sslmode=disable" -verbose up
-    volumes:
-      - type: bind
-        source: ./server/pkg/repository/postgres/migrations
-        target: /migrations
-
 volumes:
   node_modules:
